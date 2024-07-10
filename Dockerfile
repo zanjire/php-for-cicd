@@ -69,3 +69,4 @@ RUN docker-php-ext-enable mongodb
 RUN docker-php-ext-enable pdo_pgsql
 RUN docker-php-ext-enable swoole
 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
