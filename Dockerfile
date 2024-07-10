@@ -1,21 +1,30 @@
 FROM php:8.2.21-fpm
 RUN apt update
-RUN apt -y install  gcc             \
+RUN apt install -y --no-install-recommends \
+                    gcc             \
                     make            \
                     autoconf        \
                     libc-dev        \
                     pkg-config      \
                     wget            \
                     libssh2-1-dev   \
+                    libssl-dev      \
                     bash            \
                     sshpass         \
                     zlib1g-dev      \
                     nginx           \
                     openssh-server  \ 
-                    micro 
+                    micro           \
+                    unzip           \
+                    libjpeg-dev     \
+                    libxml2-dev     \
+                    libfreetype6-dev\
+                    supervisor
 
 RUN pecl install grpc
 RUN pecl install mongodb
+RUN docker-php-ext-enable swoole
+
 
 ## Protobuf and GRPC
 #ENV PROTOBUF_VERSION "3.25.1"
@@ -48,10 +57,12 @@ RUN docker-php-ext-enable zip
 RUN docker-php-ext-enable exif
 RUN docker-php-ext-enable intl
 RUN docker-php-ext-enable grpc
+RUN docker-php-ext-enable pgsql
 RUN docker-php-ext-enable pcntl
 RUN docker-php-ext-enable bcmath
 RUN docker-php-ext-enable sodium
 RUN docker-php-ext-enable sockets
+RUN docker-php-ext-enable opennssl
 RUN docker-php-ext-enable mongodb
 RUN docker-php-ext-enable pdo_pgsql
 
