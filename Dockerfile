@@ -8,11 +8,14 @@ RUN apt -y install  gcc             \
                     wget            \
                     libssh2-1-dev   \
                     bash            \
-                    openssh-client  \
                     sshpass         \
-                    zlib1g-dev
+                    zlib1g-dev      \
+                    nginx           \
+                    openssh-server  \ 
+                    micro 
 
 RUN pecl install grpc
+RUN pecl install mongodb
 
 ## Protobuf and GRPC
 #ENV PROTOBUF_VERSION "3.25.1"
@@ -51,3 +54,5 @@ RUN docker-php-ext-enable sodium
 RUN docker-php-ext-enable sockets
 RUN docker-php-ext-enable mongodb
 RUN docker-php-ext-enable pdo_pgsql
+
+
