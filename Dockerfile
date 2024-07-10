@@ -26,8 +26,8 @@ RUN pecl install grpc
 #COPY wait-for-temporal.sh /usr/local/bin
 #RUN chmod +x /usr/local/bin/wait-for-temporal.sh
 
-COPY src/develop/php-build/install-php-extensions  /usr/local/bin/install-php-extensions
-COPY src/develop/php-build/install-php-extensions /usr/bin/install-php-extensions
+COPY deploy/install-php-extensions  /usr/local/bin/install-php-extensions
+COPY deploy/install-php-extensions /usr/bin/install-php-extensions
 
 RUN install-php-extensions gd
 RUN install-php-extensions exif
