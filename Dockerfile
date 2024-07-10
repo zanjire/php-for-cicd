@@ -42,7 +42,6 @@ COPY deploy/install-php-extensions  /usr/local/bin/install-php-extensions
 COPY deploy/install-php-extensions /usr/bin/install-php-extensions
 
 
-RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN install-php-extensions gd
 RUN install-php-extensions exif
 RUN install-php-extensions pcntl
