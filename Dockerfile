@@ -63,7 +63,6 @@ RUN docker-php-ext-enable pcntl
 RUN docker-php-ext-enable bcmath
 RUN docker-php-ext-enable sodium
 RUN docker-php-ext-enable sockets
-RUN docker-php-ext-enable openssl #>> /dev/null 2>&1 || true
 RUN docker-php-ext-enable mongodb
 RUN docker-php-ext-enable pdo_pgsql
 RUN docker-php-ext-enable swoole
