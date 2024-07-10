@@ -22,8 +22,8 @@ RUN apt install -y --no-install-recommends \
                     supervisor
 
 RUN pecl install grpc
-RUN pecl install mongodb
-RUN docker-php-ext-enable swoole
+RUN pecl install mongodb-1.16.2
+RUN pecl install swoole
 
 
 ## Protobuf and GRPC
@@ -41,6 +41,8 @@ RUN docker-php-ext-enable swoole
 COPY deploy/install-php-extensions  /usr/local/bin/install-php-extensions
 COPY deploy/install-php-extensions /usr/bin/install-php-extensions
 
+
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN install-php-extensions gd
 RUN install-php-extensions exif
 RUN install-php-extensions pcntl
@@ -65,5 +67,5 @@ RUN docker-php-ext-enable sockets
 RUN docker-php-ext-enable opennssl
 RUN docker-php-ext-enable mongodb
 RUN docker-php-ext-enable pdo_pgsql
-
+RUN docker-php-ext-enable swoole
 
