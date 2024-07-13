@@ -21,6 +21,8 @@ RUN apt install -y --no-install-recommends \
                     libfreetype6-dev\
                     supervisor
 
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* >> /dev/null 2>&1 || true
+
 RUN pecl install grpc
 RUN pecl install mongodb-1.16.2
 RUN pecl install swoole
