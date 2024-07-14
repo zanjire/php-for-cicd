@@ -46,19 +46,24 @@ COPY deploy/install-php-extensions /usr/bin/install-php-extensions
 
 RUN install-php-extensions gd
 RUN install-php-extensions exif
+RUN install-php-extensions curl
 RUN install-php-extensions pcntl
 RUN install-php-extensions pgsql
 RUN install-php-extensions mysql
 RUN install-php-extensions bcmath
 RUN install-php-extensions sockets
+RUN install-php-extensions fileinfo
 RUN install-php-extensions openssl
+RUN install-php-extensions mbstring
 RUN install-php-extensions pdo_pgsql
+RUN install-php-extensions pdo_mysql
 RUN install-php-extensions intl-3.0.0
 RUN install-php-extensions pierrejoye/php_zip@1.22.2
 
 RUN docker-php-ext-enable gd
 RUN docker-php-ext-enable zip
 RUN docker-php-ext-enable exif
+RUN docker-php-ext-enable curl
 RUN docker-php-ext-enable intl
 RUN docker-php-ext-enable grpc
 RUN docker-php-ext-enable pgsql
@@ -68,7 +73,11 @@ RUN docker-php-ext-enable bcmath
 RUN docker-php-ext-enable sodium
 RUN docker-php-ext-enable sockets
 RUN docker-php-ext-enable mongodb
+RUN docker-php-ext-enable fileinfo
+RUN docker-php-ext-enable openssl
+RUN docker-php-ext-enable mbstring
 RUN docker-php-ext-enable pdo_pgsql
+RUN docker-php-ext-enable pdo_mysql
 RUN docker-php-ext-enable swoole
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
