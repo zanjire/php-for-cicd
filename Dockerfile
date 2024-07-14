@@ -50,4 +50,12 @@ RUN apt install -y    php8.2-mongodb
 RUN apt install -y    php8.2-grpc        
 
 
+COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-enable /usr/local/bin/docker-php-ext-enable
+COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-install /usr/local/bin/docker-php-ext-install
+
+RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-enable pdo pdo_mysql
+
+
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
