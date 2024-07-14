@@ -1,6 +1,11 @@
-FROM php:8.2.21-fpm
-RUN apt update
-RUN apt install -y --no-install-recommends \
+FROM ubuntu:22.04
+
+
+RUN apt update --fix-missing
+
+RUN apt install -y                  \
+                    python3         \
+                    software-properties-common \
                     gcc             \
                     make            \
                     autoconf        \
@@ -19,65 +24,32 @@ RUN apt install -y --no-install-recommends \
                     libjpeg-dev     \
                     libxml2-dev     \
                     libfreetype6-dev\
-                    supervisor
+                    supervisor      \
+                    python3-launchpadlib
+
+RUN add-apt-repository ppa:ondrej/php
+RUN apt-get update
+RUN export DEBIAN_FRONTEND=noninteractive \
+    && apt install -y    \
+    php8.2-fpm           \
+    php8.2-gd            \
+    php8.2-exif          \
+    php8.2-curl          \
+    php8.2-pcntl         \
+    php8.2-pgsql         \
+    php8.2-mysql         \
+    php8.2-bcmath        \
+    php8.2-sockets       \
+    php8.2-fileinfo      \
+    php8.2-openssl       \
+    php8.2-mbstring      \
+    php8.2-pdo_pgsql     \
+    php8.2-pdo_mysql     \
+    php8.2-int           \
+    php8.2-zip           \
+    php8.2-swoole        \   
+    php8.2-mongodb       \   
+    php8.2-grpc        
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* >> /dev/null 2>&1 || true
-
-RUN pecl install grpc
-RUN pecl install mongodb-1.16.2
-RUN pecl install swoole
-
-
-## Protobuf and GRPC
-#ENV PROTOBUF_VERSION "3.25.1"
-#RUN pecl channel-update pecl.php.net
-#RUN pecl install protobuf-${PROTOBUF_VERSION} grpc \
- #   && docker-php-ext-enable protobuf grpc
-
-# Install Temporal CLI
-#COPY --from=temporalio/admin-tools /usr/local/bin/tctl /usr/local/bin/tctl
-# Wait for Temporal service to star up
-#COPY wait-for-temporal.sh /usr/local/bin
-#RUN chmod +x /usr/local/bin/wait-for-temporal.sh
-
-COPY deploy/install-php-extensions  /usr/local/bin/install-php-extensions
-COPY deploy/install-php-extensions /usr/bin/install-php-extensions
-
-
-RUN install-php-extensions gd
-RUN install-php-extensions exif
-RUN install-php-extensions curl
-RUN install-php-extensions pcntl
-RUN install-php-extensions pgsql
-RUN install-php-extensions mysql
-RUN install-php-extensions bcmath
-RUN install-php-extensions sockets
-RUN install-php-extensions fileinfo
-RUN install-php-extensions openssl
-RUN install-php-extensions mbstring
-RUN install-php-extensions pdo_pgsql
-RUN install-php-extensions pdo_mysql
-RUN install-php-extensions intl-3.0.0
-RUN install-php-extensions pierrejoye/php_zip@1.22.2
-
-RUN docker-php-ext-enable gd
-RUN docker-php-ext-enable zip
-RUN docker-php-ext-enable exif
-RUN docker-php-ext-enable curl
-RUN docker-php-ext-enable intl
-RUN docker-php-ext-enable grpc
-RUN docker-php-ext-enable pgsql
-RUN docker-php-ext-enable mysql
-RUN docker-php-ext-enable pcntl
-RUN docker-php-ext-enable bcmath
-RUN docker-php-ext-enable sodium
-RUN docker-php-ext-enable sockets
-RUN docker-php-ext-enable mongodb
-RUN docker-php-ext-enable fileinfo
-RUN docker-php-ext-enable openssl
-RUN docker-php-ext-enable mbstring
-RUN docker-php-ext-enable pdo_pgsql
-RUN docker-php-ext-enable pdo_mysql
-RUN docker-php-ext-enable swoole
-
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
