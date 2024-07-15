@@ -25,6 +25,7 @@ RUN apt install -y                  \
                     libxml2-dev     \
                     libfreetype6-dev\
                     supervisor      \
+                    tini            \
                     python3-launchpadlib
 
 RUN add-apt-repository ppa:ondrej/php
