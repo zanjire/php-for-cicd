@@ -30,7 +30,8 @@ RUN apt install -y                  \
 RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update
 RUN export DEBIAN_FRONTEND=noninteractive \
-    && apt install -y php8.2-fpm             
+    && apt install -y php8.2 php8.2-fpm             
+RUN apt install -y    php8.2-cli            
 RUN apt install -y    php8.2-gd            
 RUN apt install -y    php8.2-exif          
 RUN apt install -y    php8.2-curl                  
