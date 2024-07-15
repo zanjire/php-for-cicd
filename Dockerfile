@@ -48,13 +48,21 @@ RUN apt install -y    php8.2-zip
 RUN apt install -y    php8.2-swoole         
 RUN apt install -y    php8.2-mongodb         
 RUN apt install -y    php8.2-grpc        
+RUN apt install -y    php8.2-dev        
 
 
 COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-enable /usr/local/bin/docker-php-ext-enable
 COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-install /usr/local/bin/docker-php-ext-install
+COPY --from=php:8.2-fpm /usr/local/bin/docker-php-source /usr/local/bin/docker-php-source
+COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-configure /usr/local/bin/docker-php-ext-configure
+COPY --from=php:8.2-fpm /usr/local/bin/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
+COPY --from=php:8.2-fpm /usr/src/php.tar.xz /usr/src/php.tar.xz
 
-RUN docker-php-ext-install pdo pdo_mysql
-RUN docker-php-ext-enable pdo pdo_mysql
+RUN /usr/local/bin/docker-php-ext-install pdo 
+RUN /usr/local/bin/docker-php-ext-enable pdo 
+
+RUN /usr/local/bin/docker-php-ext-install pdo_mysql
+RUN /usr/local/bin/docker-php-ext-enable pdo_mysql
 
 
 
