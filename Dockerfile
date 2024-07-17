@@ -27,19 +27,17 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  libfreetype6-dev
 RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  supervisor      
 RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  tini            
 RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  python3-launchpadlib 
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  composer
+
 
 RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update
 RUN export DEBIAN_FRONTEND=noninteractive \
-    && apt install -y php8.2 php8.2-fpm             
+    && apt install -y php8.2 php8.2-fpm   
 RUN apt install -y    php8.2-curl            
 RUN apt install -y    php8.2-cli            
 RUN apt install -y    php8.2-gd            
 RUN apt install -y    php8.2-exif          
-RUN apt install -y    php8.2-curl                  
-RUN apt install -y    php8.2-pgsql         
-RUN apt install -y    php8.2-mysql         
+RUN apt install -y    php8.2-curl                       
 RUN apt install -y    php8.2-bcmath        
 RUN apt install -y    php8.2-amqp        
 RUN apt install -y    php8.2-uuid        
@@ -56,20 +54,17 @@ RUN apt install -y    php8.2-dev
 RUN apt install -y    php8.2-dom        
 RUN apt install -y    php8.2-opcache        
 RUN apt install -y    composer        
-
-
+     
 COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-enable /usr/local/bin/docker-php-ext-enable
 COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-install /usr/local/bin/docker-php-ext-install
 COPY --from=php:8.2-fpm /usr/local/bin/docker-php-source /usr/local/bin/docker-php-source
 COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-configure /usr/local/bin/docker-php-ext-configure
 COPY --from=php:8.2-fpm /usr/local/bin/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
 COPY --from=php:8.2-fpm /usr/src/php.tar.xz /usr/src/php.tar.xz
-
-RUN /usr/local/bin/docker-php-ext-install pdo  >> /dev/null 2>&1 || true
-RUN /usr/local/bin/docker-php-ext-enable pdo  >> /dev/null 2>&1 || true
-
-RUN /usr/local/bin/docker-php-ext-install pdo_mysql >> /dev/null 2>&1 || true
-RUN /usr/local/bin/docker-php-ext-enable pdo_mysql >> /dev/null 2>&1 || true
-
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+RUN install-php-extensions mysqli  #>> /dev/null 2>&1 || true
+RUN install-php-extensions pdo
+RUN install-php-extensions pdo-mysql
+RUN install-php-extensions pdo-pgsql
 
 

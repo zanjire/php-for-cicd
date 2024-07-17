@@ -27,4 +27,5 @@ jobs:
         with:
           push: true
           tags: uscf/php-docker:latest,uscf/php-docker:8.2
+          no-cache: true
           #test comment
