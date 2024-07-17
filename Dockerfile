@@ -61,11 +61,11 @@ COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-configure /usr/local/bin/d
 COPY --from=php:8.2-fpm /usr/local/bin/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
 COPY --from=php:8.2-fpm /usr/src/php.tar.xz /usr/src/php.tar.xz
 
-RUN /usr/local/bin/docker-php-ext-install pdo 
-RUN /usr/local/bin/docker-php-ext-enable pdo 
+RUN /usr/local/bin/docker-php-ext-install pdo  >> /dev/null 2>&1 || true
+RUN /usr/local/bin/docker-php-ext-enable pdo  >> /dev/null 2>&1 || true
 
-RUN /usr/local/bin/docker-php-ext-install pdo_mysql
-RUN /usr/local/bin/docker-php-ext-enable pdo_mysql
+RUN /usr/local/bin/docker-php-ext-install pdo_mysql >> /dev/null 2>&1 || true
+RUN /usr/local/bin/docker-php-ext-enable pdo_mysql >> /dev/null 2>&1 || true
 
 
 
