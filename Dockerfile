@@ -33,6 +33,7 @@ RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt install -y php8.2 php8.2-fpm             
+RUN apt install -y    php8.2-curl            
 RUN apt install -y    php8.2-cli            
 RUN apt install -y    php8.2-gd            
 RUN apt install -y    php8.2-exif          
@@ -52,6 +53,7 @@ RUN apt install -y    php8.2-swoole
 RUN apt install -y    php8.2-mongodb         
 RUN apt install -y    php8.2-grpc        
 RUN apt install -y    php8.2-dev        
+RUN apt install -y    composer        
 
 
 COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-enable /usr/local/bin/docker-php-ext-enable
