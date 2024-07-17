@@ -26,7 +26,8 @@ RUN apt install -y                  \
                     libfreetype6-dev\
                     supervisor      \
                     tini            \
-                    python3-launchpadlib
+                    python3-launchpadlib \
+                    composer
 
 RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update
@@ -68,4 +69,3 @@ RUN /usr/local/bin/docker-php-ext-enable pdo_mysql
 
 
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
