@@ -1,33 +1,33 @@
 FROM ubuntu:22.04
 
 
-RUN apt update --fix-missing
-
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -y                  \
-                    python3         \
-                    software-properties-common \
-                    gcc             \
-                    make            \
-                    autoconf        \
-                    libc-dev        \
-                    pkg-config      \
-                    wget            \
-                    libssh2-1-dev   \
-                    libssl-dev      \
-                    bash            \
-                    sshpass         \
-                    zlib1g-dev      \
-                    nginx           \
-                    openssh-server  \
-                    micro           \
-                    unzip           \
-                    libjpeg-dev     \
-                    libxml2-dev     \
-                    libfreetype6-dev\
-                    supervisor      \
-                    tini            \
-                    python3-launchpadlib \
-                    composer
+RUN apt update
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y python3         
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  software-properties-common 
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  libonig-dev     
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  libpq-dev       
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  gcc             
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  make            
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  autoconf        
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  libc-dev        
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  pkg-config      
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  wget            
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  libssh2-1-dev   
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  libssl-dev      
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  bash           
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  sshpass         
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  zlib1g-dev      
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  nginx           
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  openssh-server  
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  micro           
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  unzip          
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  libjpeg-dev     
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  libxml2-dev     
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  libfreetype6-dev
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  supervisor      
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  tini            
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  python3-launchpadlib 
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  composer
 
 RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update
@@ -54,6 +54,7 @@ RUN apt install -y    php8.2-mongodb
 RUN apt install -y    php8.2-grpc        
 RUN apt install -y    php8.2-dev        
 RUN apt install -y    php8.2-dom        
+RUN apt install -y    php8.2-opcache        
 RUN apt install -y    composer        
 
 
