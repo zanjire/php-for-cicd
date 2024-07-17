@@ -3,7 +3,7 @@ FROM ubuntu:22.04
 
 RUN apt update --fix-missing
 
-RUN apt install -y                  \
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y                  \
                     python3         \
                     software-properties-common \
                     gcc             \
