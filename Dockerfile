@@ -53,6 +53,7 @@ RUN apt install -y    php8.2-swoole
 RUN apt install -y    php8.2-mongodb         
 RUN apt install -y    php8.2-grpc        
 RUN apt install -y    php8.2-dev        
+RUN apt install -y    php8.2-dom        
 RUN apt install -y    composer        
 
 
