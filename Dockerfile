@@ -27,6 +27,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  libxml2-dev
 RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  libfreetype6-dev
 RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  supervisor      
 RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  tini            
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  libcurl4-openssl-dev            
 RUN export DEBIAN_FRONTEND=noninteractive && apt install -y  python3-launchpadlib 
 
 
@@ -67,6 +68,7 @@ RUN install-php-extensions mysqli  #>> /dev/null 2>&1 || true
 RUN install-php-extensions pdo
 RUN install-php-extensions pdo-mysql
 RUN install-php-extensions pdo-pgsql
+RUN install-php-extensions curl
 RUN install-php-extensions openswoole
 
 
