@@ -67,5 +67,6 @@ RUN install-php-extensions mysqli  #>> /dev/null 2>&1 || true
 RUN install-php-extensions pdo
 RUN install-php-extensions pdo-mysql
 RUN install-php-extensions pdo-pgsql
+RUN install-php-extensions openswoole
 
 
