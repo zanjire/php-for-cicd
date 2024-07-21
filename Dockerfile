@@ -69,6 +69,6 @@ RUN install-php-extensions pdo
 RUN install-php-extensions pdo-mysql
 RUN install-php-extensions pdo-pgsql
 RUN install-php-extensions curl
-RUN install-php-extensions openswoole
+# RUN export PHP_INI_DIR=/etc/php/8.2/cli/ && install-php-extensions openswoole
 
 
