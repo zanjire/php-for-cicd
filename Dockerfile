@@ -56,7 +56,9 @@ RUN apt install -y    php8.2-dev
 RUN apt install -y    php8.2-dom        
 RUN apt install -y    php8.2-opcache        
 RUN apt install -y    composer        
-RUN apt install -y    node        
+RUN apt install -y    npm
+RUN apt install -y    nodejs
+
      
 COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-enable /usr/local/bin/docker-php-ext-enable
 COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-install /usr/local/bin/docker-php-ext-install
