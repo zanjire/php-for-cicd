@@ -57,8 +57,18 @@ RUN apt install -y    php8.2-dom
 RUN apt install -y    php8.2-opcache        
 RUN apt install -y    composer        
 RUN apt install -y    npm
-RUN apt install -y    nodejs
+ENV NODE_VERSION=19.9.0
+ENV NVM_DIR /tmp/nvm
+WORKDIR $NVM_DIR
 
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash \
+  && . $NVM_DIR/nvm.sh \
+  && nvm install $NODE_VERSION \
+  && nvm alias default $NODE_VERSION \
+  && nvm use default
+
+ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH      $NVM_DIR/v$NODE_VERSION/bin:$PATH
      
 COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-enable /usr/local/bin/docker-php-ext-enable
 COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-install /usr/local/bin/docker-php-ext-install
