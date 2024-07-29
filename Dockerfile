@@ -57,6 +57,7 @@ RUN apt install -y    php8.2-dom
 RUN apt install -y    php8.2-opcache        
 RUN apt install -y    composer        
 RUN apt install -y    npm
+RUN apt install -y    inotify-tools
 ENV NODE_VERSION=19.9.0
 ENV NVM_DIR /tmp/nvm
 WORKDIR $NVM_DIR
