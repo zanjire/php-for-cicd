@@ -93,7 +93,6 @@ COPY --from=teleport /usr/local/bin/teleport /usr/local/bin/teleport
 COPY --from=teleport /usr/local/bin/tctl /usr/local/bin/tctl
 COPY --from=teleport /usr/local/bin/tsh /usr/local/bin/tsh
 COPY --from=teleport /usr/local/bin/tbot /usr/local/bin/tbot
-COPY --from=teleport /usr/local/bin/tbot /usr/local/bin/tbot
 
 CMD ["/usr/bin/supervisord", "-n"]
 
