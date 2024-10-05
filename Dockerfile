@@ -1,3 +1,4 @@
+FROM public.ecr.aws/gravitational/teleport-ent-distroless:16.4.2 AS teleport
 FROM ubuntu:22.04
 
 
@@ -85,4 +86,13 @@ RUN install-php-extensions pdo-pgsql
 RUN install-php-extensions curl
 # RUN export PHP_INI_DIR=/etc/php/8.2/cli/ && install-php-extensions openswoole
 
+# Teleport
+COPY teleport/config.yaml /etc/teleport.yaml
+COPY teleport/supervisord.conf /etc/supervisor/conf.d/teleport.supervisord.conf
+COPY --from=teleport /usr/local/bin/teleport /usr/local/bin/teleport
+COPY --from=teleport /usr/local/bin/tctl /usr/local/bin/tctl
+COPY --from=teleport /usr/local/bin/tsh /usr/local/bin/tsh
+COPY --from=teleport /usr/local/bin/tbot /usr/local/bin/tbot
+
+CMD ["/usr/bin/supervisord", "-n"]
 
