@@ -95,8 +95,5 @@ COPY --from=teleport /usr/local/bin/tsh /usr/local/bin/tsh
 COPY --from=teleport /usr/local/bin/tbot /usr/local/bin/tbot
 COPY --from=teleport /usr/local/bin/tbot /usr/local/bin/tbot
 
-RUN apt install -y htop
-
-EXPOSE 3023 3024 3025 3080
 CMD ["/usr/bin/supervisord", "-n"]
 
