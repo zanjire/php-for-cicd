@@ -87,13 +87,16 @@ RUN install-php-extensions curl
 # RUN export PHP_INI_DIR=/etc/php/8.2/cli/ && install-php-extensions openswoole
 
 # Teleport
-COPY deploy/teleport.yaml /etc/teleport.yaml
+COPY teleport/config.yaml /etc/teleport.yaml
+COPY teleport/supervisord.conf /etc/supervisor/conf.d/teleport.supervisord.conf
 COPY --from=teleport /usr/local/bin/teleport /usr/local/bin/teleport
 COPY --from=teleport /usr/local/bin/tctl /usr/local/bin/tctl
 COPY --from=teleport /usr/local/bin/tsh /usr/local/bin/tsh
 COPY --from=teleport /usr/local/bin/tbot /usr/local/bin/tbot
 COPY --from=teleport /usr/local/bin/tbot /usr/local/bin/tbot
 
-RUN /usr/local/bin/teleport start --config /etc/teleport.yaml --pid-file=/run/teleport.pid &
+RUN apt install -y htop
 
+EXPOSE 3023 3024 3025 3080
+CMD ["/usr/bin/supervisord", "-n"]
 
