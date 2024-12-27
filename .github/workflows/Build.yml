@@ -22,10 +22,21 @@ jobs:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
       -
-        name: Build and push
+        name: Build and push PHP 8.2
         uses: docker/build-push-action@v3
         with:
           push: true
           tags: uscf/php-docker:latest,uscf/php-docker:8.2
           no-cache: true
+          file: Dockerfile.8.2
+          #test comment
+          
+      -
+        name: Build and push PHP 8.3
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: uscf/php-docker:8.3
+          no-cache: true
+          file: Dockerfile.8.3
           #test comment
