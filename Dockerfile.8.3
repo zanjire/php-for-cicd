@@ -71,12 +71,12 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | b
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/v$NODE_VERSION/bin:$PATH
      
-COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-enable /usr/local/bin/docker-php-ext-enable
-COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-install /usr/local/bin/docker-php-ext-install
-COPY --from=php:8.2-fpm /usr/local/bin/docker-php-source /usr/local/bin/docker-php-source
-COPY --from=php:8.2-fpm /usr/local/bin/docker-php-ext-configure /usr/local/bin/docker-php-ext-configure
-COPY --from=php:8.2-fpm /usr/local/bin/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
-COPY --from=php:8.2-fpm /usr/src/php.tar.xz /usr/src/php.tar.xz
+COPY --from=php:8.3-fpm /usr/local/bin/docker-php-ext-enable /usr/local/bin/docker-php-ext-enable
+COPY --from=php:8.3-fpm /usr/local/bin/docker-php-ext-install /usr/local/bin/docker-php-ext-install
+COPY --from=php:8.3-fpm /usr/local/bin/docker-php-source /usr/local/bin/docker-php-source
+COPY --from=php:8.3-fpm /usr/local/bin/docker-php-ext-configure /usr/local/bin/docker-php-ext-configure
+COPY --from=php:8.3-fpm /usr/local/bin/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
+COPY --from=php:8.3-fpm /usr/src/php.tar.xz /usr/src/php.tar.xz
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions mysqli  #>> /dev/null 2>&1 || true
 RUN install-php-extensions pdo
