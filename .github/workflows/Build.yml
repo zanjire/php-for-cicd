@@ -40,3 +40,13 @@ jobs:
           no-cache: true
           file: Dockerfile.8.3
           #test comment
+          
+      -
+        name: Build and push PHP 5.6
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: uscf/php-docker:5.6
+          no-cache: true
+          file: Dockerfile.5.6
+          #test comment
