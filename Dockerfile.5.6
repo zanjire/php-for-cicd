@@ -36,6 +36,9 @@ RUN apt-get update
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt install -y php5.6 php5.6-fpm   
 RUN apt install -y    php5.6-curl            
+RUN apt install -y    php5.6-mysqli            
+RUN apt install -y    php5.6-mysql            
+RUN apt install -y    php5.6-pdo            
 RUN apt install -y    php5.6-cli            
 RUN apt install -y    php5.6-gd            
 RUN apt install -y    php5.6-exif          
