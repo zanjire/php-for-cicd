@@ -25,6 +25,7 @@ jobs:
         name: Build and push PHP 8.2
         uses: docker/build-push-action@v3
         with:
+          platforms: linux/amd64,linux/arm64 # Specify the target platforms
           push: true
           tags: uscf/php-docker:latest,uscf/php-docker:8.2
           no-cache: true
@@ -35,6 +36,7 @@ jobs:
         name: Build and push PHP 8.3
         uses: docker/build-push-action@v3
         with:
+          platforms: linux/amd64,linux/arm64 # Specify the target platforms
           push: true
           tags: uscf/php-docker:8.3
           no-cache: true
@@ -45,6 +47,7 @@ jobs:
         name: Build and push PHP 5.6
         uses: docker/build-push-action@v3
         with:
+          platforms: linux/amd64,linux/arm64 # Specify the target platforms
           push: true
           tags: uscf/php-docker:5.6
           no-cache: true
