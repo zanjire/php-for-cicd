@@ -1,5 +1,7 @@
 FROM ubuntu:22.04
 
+COPY deploy/cpu-arch.sh .
+RUN chmod +x cpu-arch.sh && ./cpu-arch.sh
 RUN apt update
 RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy python3         
 RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  software-properties-common 
