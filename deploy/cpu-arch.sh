@@ -34,4 +34,4 @@ done
 
 # Update apt repositories
 echo "Updating apt repositories..."
-sudo apt-get update
+apt-get update
