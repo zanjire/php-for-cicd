@@ -2,63 +2,19 @@ FROM ubuntu:22.04
 
 COPY deploy/cpu-arch.sh .
 RUN chmod +x cpu-arch.sh && ./cpu-arch.sh
-RUN apt update
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy python3         
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  software-properties-common 
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  libonig-dev     
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  libpq-dev       
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  gcc      
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  curl
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  make            
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  autoconf        
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  libc-dev        
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  pkg-config      
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  wget            
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  libssh2-1-dev   
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  libssl-dev      
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  bash           
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  sshpass         
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  zlib1g-dev      
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  nginx           
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  openssh-server  
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  micro           
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  unzip          
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  libjpeg-dev     
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  libxml2-dev     
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  libfreetype6-dev
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  supervisor      
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  tini            
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  libcurl4-openssl-dev            
-RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy  python3-launchpadlib 
+RUN apt update && \
+    export DEBIAN_FRONTEND=noninteractive && apt install -fy python3 software-properties-common libonig-dev
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy libpq-dev \       
+    gcc curl make autoconf libc-dev pkg-config wget libssh2-1-dev libssl-dev bash sshpass zlib1g-dev nginx openssh-server \  
+    micro unzip libjpeg-dev libxml2-dev libfreetype6-dev supervisor tini libcurl4-openssl-dev python3-launchpadlib 
 
 
-RUN add-apt-repository ppa:ondrej/php
-RUN apt-get update
-RUN export DEBIAN_FRONTEND=noninteractive \
-    && apt install -fy php8.3 php8.3-fpm   
-RUN apt install -fy    php8.3-curl            
-RUN apt install -fy    php8.3-cli            
-RUN apt install -fy    php8.3-gd            
-RUN apt install -fy    php8.3-exif          
-RUN apt install -fy    php8.3-curl                       
-RUN apt install -fy    php8.3-bcmath        
-RUN apt install -fy    php8.3-amqp        
-RUN apt install -fy    php8.3-uuid        
-RUN apt install -fy    php8.3-sockets       
-RUN apt install -fy    php8.3-mcrypt       
-RUN apt install -fy    php8.3-fileinfo             
-RUN apt install -fy    php8.3-mbstring          
-RUN apt install -fy    php8.3-intl           
-RUN apt install -fy    php8.3-zip           
-RUN apt install -fy    php8.3-swoole         
-RUN apt install -fy    php8.3-mongodb         
-RUN apt install -fy    php8.3-grpc        
-RUN apt install -fy    php8.3-dev        
-RUN apt install -fy    php8.3-dom        
-RUN apt install -fy    php8.3-opcache        
-RUN apt install -fy    composer        
-RUN apt install -fy    npm
-RUN apt install -fy    inotify-tools
+RUN add-apt-repository ppa:ondrej/php && \
+    apt-get update && \
+    export DEBIAN_FRONTEND=noninteractive \
+    && apt install -fy php8.3 php8.3-fpm php8.3-curl php8.3-cli php8.3-gd php8.3-exif php8.3-curl php8.3-bcmath  \       
+    php8.3-amqp php8.3-uuid php8.3-sockets php8.3-mcrypt php8.3-fileinfo php8.3-mbstring php8.3-intl php8.3-zip \           
+    php8.3-swoole php8.3-mongodb php8.3-grpc php8.3-dev php8.3-dom php8.3-opcache composer npm inotify-tools
 ENV NODE_VERSION=19.9.0
 ENV NVM_DIR /tmp/nvm
 WORKDIR $NVM_DIR
