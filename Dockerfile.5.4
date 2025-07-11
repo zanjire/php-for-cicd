@@ -19,20 +19,22 @@ make && \
 make install
 
 RUN wget --trust-server-names https://www.php.net/distributions/php-5.4.45.tar.gz && \
-   tar -xzf php-5.4.45.tar.gz && \
-   cd php-5.4.45 && \
-   mkdir -p /usr/include/curl && \
+    tar -xzf php-5.4.45.tar.gz && \
+    cd php-5.4.45 && \
+    mkdir -p /usr/include/curl && \
     DIR=$(find /usr -type f -name easy.h -exec dirname {} \; | head -n 1) && \
     if [ -d "$DIR" ] && [ "$(ls -A $DIR)" ]; then \
         cp -r "$DIR"/* /usr/include/curl/; \
     else \
         echo "No valid curl include directory found"; exit 1; \
-    fi  && \ 
-   ./configure --prefix=/usr/local/php54 --enable-bcmath --with-mysql \
-  --enable-mbstring --with-mysqli --with-pdo-mysql --with-openssl=/opt/openssl-1.0.2u --with-curl \
-  --with-zlib --enable-soap --enable-ftp --enable-exif --enable-bcmath --enable-sockets  && \
-   make install && \
-   rm -rf php-5.4.15.tar.bz2 php-5.4.15 
+    fi && \
+    ./configure --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data --prefix=/usr/local/php54 --enable-bcmath --with-mysql \
+      --enable-mbstring --with-mysqli --with-pdo-mysql --with-openssl=/opt/openssl-1.0.2u --with-curl \
+      --with-zlib --enable-soap --enable-ftp --enable-exif --enable-bcmath --enable-sockets && \
+    make && make install && \
+    cd .. && rm -rf php-5.4.45.tar.gz php-5.4.45
+
+ENV PATH="/usr/local/php54/bin:${PATH}"
 RUN wget https://archive.debian.org/debian/pool/main/i/icu/icu_57.1.orig.tar.gz && \
     tar -xzf icu_57.1.orig.tar.gz  && \
     cd icu/source  && \
