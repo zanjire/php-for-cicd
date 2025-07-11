@@ -25,22 +25,16 @@ jobs:
         uses: docker/setup-buildx-action@v2
         with:
           install: true
-
       -
         name: Login to DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-
       -
-        name: Build and push PHP images
+        name: Build and push PHP image
         run: |
-          for php_version in ${matrix.php_version[@]}; do
-            export TAG=$(echo "uscf/php-docker:${php_version}")
-            docker buildx build --platform $(join-path -- "${{ matrix.platform }}") -f Dockerfile.${php_version} -t $TAG .
-            docker tag $TAG uscf/php-docker:$php_version
-            if [ "$CI" = "true" ]; then
-              docker push $TAG
-            fi
-          done
+          export TAG=$(echo "uscf/php-docker:${{ matrix.php_version }}")
+          docker buildx build --platform $(echo ${{ matrix.platform }}) -f ./Dockerfile.${{ matrix.php_version }} -t $TAG .
+          docker tag $TAG uscf/php-docker:$({{ matrix.php_version }})
+          docker push $TAG
