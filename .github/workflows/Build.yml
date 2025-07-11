@@ -35,8 +35,8 @@ jobs:
         name: Build and push PHP image
         uses: docker/build-push-action@v3
         with:
-          platforms: $(echo ${{ matrix.platform }})
+          platforms: ${{ matrix.platform }}
           push: true
-          tags: $(echo "uscf/php-docker:${{ matrix.php_version }}")
+          tags:  "uscf/php-docker:${{ matrix.php_version }}"
           no-cache: true
           file: Dockerfile.${{ matrix.php_version }}
