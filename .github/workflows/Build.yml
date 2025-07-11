@@ -17,9 +17,6 @@ jobs:
           - linux/arm64
           - linux/arm/v7
           - linux/arm64/v8
-          - linux/ppc64le
-          - linux/riscv64
-          - linux/s390x
 
     runs-on: ubuntu-latest
     steps:
