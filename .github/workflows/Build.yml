@@ -33,9 +33,10 @@ jobs:
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
       -
         name: Build and push PHP image
-        run: |
-          export TAG=$(echo "uscf/php-docker:${{ matrix.php_version }}")
-          ls -ls
-          docker buildx build --platform $(echo ${{ matrix.platform }}) -f ./Dockerfile.${{ matrix.php_version }} -t $TAG .
-          docker tag $TAG uscf/php-docker:$({{ matrix.php_version }})
-          docker push $TAG
+        uses: docker/build-push-action@v3
+        with:
+          platforms: $(echo ${{ matrix.platform }})
+          push: true
+          tags: $(echo "uscf/php-docker:${{ matrix.php_version }}")
+          no-cache: true
+          file: Dockerfile.${{ matrix.php_version }}
