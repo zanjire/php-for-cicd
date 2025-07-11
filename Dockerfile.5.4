@@ -1,0 +1,59 @@
+FROM ubuntu:22.04
+
+COPY deploy/cpu-arch.sh .
+RUN chmod +x cpu-arch.sh && ./cpu-arch.sh
+RUN apt update && \
+    export DEBIAN_FRONTEND=noninteractive && apt install -fy python3 \
+    software-properties-common libonig-dev libpq-dev  gcc curl \
+    make autoconf libc-dev pkg-config wget libssh2-1-dev  libssl-dev bash sshpass zlib1g-dev  \
+    openssh-server micro unzip libjpeg-dev libxml2-dev libfreetype6-dev supervisor \
+    tini libcurl4-openssl-dev python3-launchpadlib libmysqlclient-dev build-essential libcurl4-openssl-dev libpcre3-dev
+
+
+#Install compatible openSSL
+RUN wget --trust-server-names -O openssl-1.0.2u.tar.gz https://www.openssl.org/source/old/1.0.2/openssl-1.0.2u.tar.gz  && \
+tar -xzf openssl-1.0.2u.tar.gz && \
+cd openssl-1.0.2u && \
+./config --prefix=/opt/openssl-1.0.2u && \
+make && \
+make install
+
+RUN wget --trust-server-names https://www.php.net/distributions/php-5.4.45.tar.gz && \
+   tar -xzf php-5.4.45.tar.gz && \
+   cd php-5.4.45 && \
+   mkdir /usr/include/curl && cp -fr /usr/include/x86_64-linux-gnu/curl/* /usr/include/curl/  && \ 
+   ./configure --prefix=/usr/local/php54 --enable-bcmath --with-mysql \
+  --enable-mbstring --with-mysqli --with-pdo-mysql --with-openssl=/opt/openssl-1.0.2u --with-curl \
+  --with-zlib --enable-soap --enable-ftp --enable-exif --enable-bcmath --enable-sockets  && \
+   make install && \
+   rm -rf php-5.4.15.tar.bz2 php-5.4.15 
+RUN wget https://archive.debian.org/debian/pool/main/i/icu/icu_57.1.orig.tar.gz && \
+    tar -xzf icu_57.1.orig.tar.gz  && \
+    cd icu/source  && \
+    ./configure --prefix=/opt/icu_57.1 --with-php-config=/usr/local/php54/bin/php-config  && \
+    make  && \
+    make install  && \
+    rm -rf icu_57.1.orig.tar.gz icu
+
+
+
+RUN wget https://pecl.php.net/get/intl-3.0.0.tgz && \
+tar -xzf intl-3.0.0.tgz && \
+cd intl-3.0.0 && \
+/usr/local/php54/bin/phpize && \
+./configure --with-icu-dir=/opt/icu_57.1 --enable-intl --with-php-config=/usr/local/php54/bin/php-config && \
+make && \
+make install && \
+rm -rf intl-3.0.0.tgz intl-3.0.0
+
+
+# Cleanup docker image
+RUN apt-get update && \
+    export DEBIAN_FRONTEND=noninteractive && \
+    apt-get install -y --no-install-recommends \
+        python3 software-properties-common libonig-dev libpq-dev gcc curl libpcre3-dev \
+        make autoconf libc-dev pkg-config wget libssh2-1-dev libssl-dev bash sshpass \
+        zlib1g-dev openssh-server micro unzip libjpeg-dev libxml2-dev libfreetype6-dev supervisor \
+        tini libcurl4-openssl-dev python3-launchpadlib libmysqlclient-dev build-essential && \
+    apt-get purge -y --auto-remove gcc make autoconf libc-dev pkg-config wget libssh2-1-dev libssl-dev zlib1g-dev libjpeg-dev libxml2-dev libfreetype6-dev libcurl4-openssl-dev libmysqlclient-dev build-essential && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

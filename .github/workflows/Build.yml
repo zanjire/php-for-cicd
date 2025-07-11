@@ -53,3 +53,14 @@ jobs:
           no-cache: true
           file: Dockerfile.5.6
           #test comment
+    
+      -
+        name: Build and push PHP 5.4
+        uses: docker/build-push-action@v3
+        with:
+          platforms: linux/amd64,linux/arm64 # Specify the target platforms
+          push: true
+          tags: uscf/php-docker:5.4
+          no-cache: true
+          file: Dockerfile.5.4
+          #test comment
