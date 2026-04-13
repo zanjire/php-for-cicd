@@ -37,6 +37,7 @@ COPY --from=php:8.3-fpm /usr/src/php.tar.xz /usr/src/php.tar.xz
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions mysqli  #>> /dev/null 2>&1 || true
 RUN install-php-extensions pdo
+RUN install-php-extensions swoole
 RUN install-php-extensions pdo-mysql
 RUN install-php-extensions pdo-pgsql
 RUN install-php-extensions curl
