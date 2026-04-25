@@ -11,7 +11,7 @@ RUN apt update && \
 
 
 #Install compatible openSSL
-RUN wget --trust-server-names -O openssl-1.0.2u.tar.gz https://www.openssl.org/source/old/1.0.2/openssl-1.0.2u.tar.gz  && \
+RUN wget --trust-server-names -O openssl-1.0.2u.tar.gz https://github.com/openssl/openssl/releases/download/OpenSSL_1_0_0/openssl-1.0.0.tar.gz  && \
 tar -xzf openssl-1.0.2u.tar.gz && \
 cd openssl-1.0.2u && \
 ./config --prefix=/opt/openssl-1.0.2u && \
