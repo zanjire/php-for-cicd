@@ -35,10 +35,28 @@ jobs:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
       -
-        name: Build and push PHP image
+        name: Build and push PHP lamd64
         uses: docker/build-push-action@v3
         with:
-          platforms: ${{ matrix.platform }}
+          platforms: linux/amd64
+          push: true
+          tags:  "uscf/php-docker:${{ matrix.php_version }}"
+          no-cache: true
+          file: Dockerfile.${{ matrix.php_version }}
+      -
+        name: Build and push PHP larm64
+        uses: docker/build-push-action@v3
+        with:
+          platforms: linux/arm64
+          push: true
+          tags:  "uscf/php-docker:${{ matrix.php_version }}"
+          no-cache: true
+          file: Dockerfile.${{ matrix.php_version }}
+      -
+        name: Build and push PHP larm64v8
+        uses: docker/build-push-action@v3
+        with:
+          platforms: linux/arm64/v8
           push: true
           tags:  "uscf/php-docker:${{ matrix.php_version }}"
           no-cache: true
