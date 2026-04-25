@@ -40,24 +40,24 @@ jobs:
         with:
           platforms: linux/amd64
           push: true
-          tags:  "uscf/php-docker:${{ matrix.php_version }}"
+          tags:  "uscf/php-docker:8.3"
           no-cache: true
-          file: Dockerfile.${{ matrix.php_version }}
+          file: Dockerfile.8.3
       -
         name: Build and push PHP larm64
         uses: docker/build-push-action@v3
         with:
           platforms: linux/arm64
           push: true
-          tags:  "uscf/php-docker:${{ matrix.php_version }}"
+          tags:  "uscf/php-docker:8.3"
           no-cache: true
-          file: Dockerfile.${{ matrix.php_version }}
+          file: Dockerfile.8.3
       -
         name: Build and push PHP larm64v8
         uses: docker/build-push-action@v3
         with:
           platforms: linux/arm64/v8
           push: true
-          tags:  "uscf/php-docker:${{ matrix.php_version }}"
+          tags:  "uscf/php-docker:8.3"
           no-cache: true
-          file: Dockerfile.${{ matrix.php_version }}
+          file: Dockerfile.8.3
