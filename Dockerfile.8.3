@@ -25,8 +25,12 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | b
   && nvm alias default $NODE_VERSION \
   && nvm use default
 
+RUN echo 'export NVM_DIR="/tmp/nvm"' >> /etc/bash.bashrc && \
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> /etc/bash.bashrc
+
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/v$NODE_VERSION/bin:$PATH
+ENV SHELL=/bin/bash
      
 COPY --from=php:8.3-fpm /usr/local/bin/docker-php-ext-enable /usr/local/bin/docker-php-ext-enable
 COPY --from=php:8.3-fpm /usr/local/bin/docker-php-ext-install /usr/local/bin/docker-php-ext-install
