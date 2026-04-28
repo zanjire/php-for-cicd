@@ -14,7 +14,7 @@ RUN add-apt-repository ppa:ondrej/php && \
     export DEBIAN_FRONTEND=noninteractive \
     && apt install -fy php8.3 php8.3-fpm php8.3-curl php8.3-cli php8.3-gd php8.3-exif php8.3-curl php8.3-bcmath  \       
     php8.3-amqp php8.3-uuid php8.3-sockets php8.3-mcrypt php8.3-fileinfo php8.3-mbstring php8.3-intl php8.3-zip \           
-    php8.3-swoole php8.3-mongodb php8.3-grpc php8.3-dev php8.3-dom php8.3-opcache composer npm inotify-tools
+    php8.3-swoole php8.3-mongodb php8.3-grpc php8.3-dev php8.3-dom php8.3-opcache php8.3-sqlite3 composer npm inotify-tools
 ENV NODE_VERSION=22.9.0
 ENV NVM_DIR /tmp/nvm
 WORKDIR $NVM_DIR
@@ -45,19 +45,7 @@ RUN install-php-extensions swoole
 RUN install-php-extensions pdo-mysql
 RUN install-php-extensions pdo-pgsql
 RUN install-php-extensions curl
-RUN install-php-extensions sqlite3
-RUN install-php-extensions redis
-RUN install-php-extensions amqp
-RUN install-php-extensions uuid
-RUN install-php-extensions sockets
-RUN install-php-extensions mcrypt
-RUN install-php-extensions fileinfo
-RUN install-php-extensions mbstring
-RUN install-php-extensions intl
-RUN install-php-extensions zip
-RUN install-php-extensions swoole
-RUN install-php-extensions mongodb
-RUN install-php-extensions grpc
+RUN install-php-extensions pcntl
 # RUN export PHP_INI_DIR=/etc/php/8.2/cli/ && install-php-extensions openswoole
 
 
