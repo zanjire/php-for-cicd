@@ -31,7 +31,7 @@ jobs:
       - name: Build and push multi-architecture image
         uses: docker/build-push-action@v5 # Updated to v5 for best practices
         with:
-          platforms: linux/amd64,linux/arm64,linux/arm64/v8
+          platforms: linux/amd64
           push: true
           tags: uscf/php-docker:8.3
           file: Dockerfile.8.3
