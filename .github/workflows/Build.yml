@@ -28,11 +28,20 @@ jobs:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
 
-      - name: Build and push multi-architecture image
+      - name: Build and push multi-architecture image 8.3
         uses: docker/build-push-action@v5 # Updated to v5 for best practices
         with:
           platforms: linux/amd64
           push: true
           tags: uscf/php-docker:8.3
           file: Dockerfile.8.3
+          # no-cache is removed to allow layer caching unless strictly needed
+`
+      - name: Build and push multi-architecture image 8.2
+        uses: docker/build-push-action@v5 # Updated to v5 for best practices
+        with:
+          platforms: linux/amd64
+          push: true
+          tags: uscf/php-docker:8.2
+          file: Dockerfile.8.2
           # no-cache is removed to allow layer caching unless strictly needed
