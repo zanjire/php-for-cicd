@@ -16,7 +16,7 @@ RUN add-apt-repository ppa:ondrej/php && \
     php8.3-amqp php8.3-uuid php8.3-sockets php8.3-mcrypt php8.3-fileinfo php8.3-mbstring php8.3-intl php8.3-zip \           
     php8.3-swoole php8.3-mongodb php8.3-grpc php8.3-dev php8.3-dom php8.3-opcache php8.3-sqlite3 php8.3-redis composer npm inotify-tools
 ENV NODE_VERSION=22.9.0
-ENV NVM_DIR /tmp/nvm
+ENV NVM_DIR=/tmp/nvm
 WORKDIR $NVM_DIR
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash \
@@ -28,8 +28,8 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | b
 RUN echo 'export NVM_DIR="/tmp/nvm"' >> /etc/bash.bashrc && \
     echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> /etc/bash.bashrc
 
-ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
-ENV PATH      $NVM_DIR/v$NODE_VERSION/bin:$PATH
+ENV NODE_PATH=$NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH=$NVM_DIR/v$NODE_VERSION/bin:$PATH
 ENV SHELL=/bin/bash
      
 COPY --from=php:8.3-fpm /usr/local/bin/docker-php-ext-enable /usr/local/bin/docker-php-ext-enable
