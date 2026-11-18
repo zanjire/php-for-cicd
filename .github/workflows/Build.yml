@@ -3,6 +3,9 @@ name: Dockerize
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - Dockerfile.8.4
+      - .github/workflows/Build-8.4.yml
 
 concurrency:
   group: environment-${{ github.ref }}

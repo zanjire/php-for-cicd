@@ -1,0 +1,52 @@
+FROM ubuntu:22.04
+
+COPY deploy/cpu-arch.sh .
+RUN chmod +x cpu-arch.sh && ./cpu-arch.sh
+RUN apt update && \
+    export DEBIAN_FRONTEND=noninteractive && apt install -fy python3 software-properties-common libonig-dev
+RUN export DEBIAN_FRONTEND=noninteractive && apt install -fy libpq-dev \       
+    gcc curl make autoconf libc-dev pkg-config wget libssh2-1-dev libssl-dev bash sshpass zlib1g-dev nginx openssh-server \  
+    micro unzip libjpeg-dev libxml2-dev libfreetype6-dev supervisor tini libcurl4-openssl-dev python3-launchpadlib 
+
+
+RUN add-apt-repository ppa:ondrej/php && \
+    apt-get update && \
+    export DEBIAN_FRONTEND=noninteractive \
+    && apt install -fy php8.4 php8.4-fpm php8.4-curl php8.4-cli php8.4-gd php8.4-exif php8.4-curl php8.4-bcmath  \       
+    php8.4-amqp php8.4-uuid php8.4-sockets php8.4-mcrypt php8.4-fileinfo php8.4-mbstring php8.4-intl php8.4-zip \           
+    php8.4-swoole php8.4-mongodb php8.4-grpc php8.4-dev php8.4-dom php8.4-opcache php8.4-sqlite3 php8.4-redis composer npm inotify-tools
+ENV NODE_VERSION=22.9.0
+ENV NVM_DIR=/tmp/nvm
+WORKDIR $NVM_DIR
+
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash \
+  && . $NVM_DIR/nvm.sh \
+  && nvm install $NODE_VERSION \
+  && nvm alias default $NODE_VERSION \
+  && nvm use default
+
+RUN echo 'export NVM_DIR="/tmp/nvm"' >> /etc/bash.bashrc && \
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> /etc/bash.bashrc
+
+ENV NODE_PATH=$NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH=$NVM_DIR/v$NODE_VERSION/bin:$PATH
+ENV SHELL=/bin/bash
+     
+COPY --from=php:8.4-fpm /usr/local/bin/docker-php-ext-enable /usr/local/bin/docker-php-ext-enable
+COPY --from=php:8.4-fpm /usr/local/bin/docker-php-ext-install /usr/local/bin/docker-php-ext-install
+COPY --from=php:8.4-fpm /usr/local/bin/docker-php-source /usr/local/bin/docker-php-source
+COPY --from=php:8.4-fpm /usr/local/bin/docker-php-ext-configure /usr/local/bin/docker-php-ext-configure
+COPY --from=php:8.4-fpm /usr/local/bin/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
+COPY --from=php:8.4-fpm /usr/src/php.tar.xz /usr/src/php.tar.xz
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+RUN install-php-extensions mysqli  #>> /dev/null 2>&1 || true
+RUN install-php-extensions pdo
+RUN install-php-extensions redis
+RUN install-php-extensions swoole
+RUN install-php-extensions pdo-mysql
+RUN install-php-extensions pdo-pgsql
+RUN install-php-extensions curl
+RUN install-php-extensions pcntl
+# RUN export PHP_INI_DIR=/etc/php/8.2/cli/ && install-php-extensions openswoole
+
+
